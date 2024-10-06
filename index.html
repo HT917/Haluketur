@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Minecraft 伺服器</title>
+</head>
+<body>
+    <header>
+        <h1>Minecraft 伺服器</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">首頁</a></li>
+                <li><a href="features.html">特色玩法</a></li>
+                <li><a href="rules.html">伺服器規則</a></li>
+                <li><a href="gallery.html">圖片展示</a></li>
+                <li><a href="support.html">支持我們</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>歡迎來到我們的伺服器！</h2>
+            <p>在這裡，你可以與朋友一起探索無限的創造力和冒險！</p>
+        </section>
+
+        <section id="countdown">
+            <h2>跨年倒數</h2>
+            <div id="timer">還有 <span id="days">00</span> 天 <span id="hours">00</span> 小時 <span id="minutes">00</span> 分鐘 <span id="seconds">00</span> 秒</div>
+        </section>
+
+        <section id="calendar">
+            <h2>日曆</h2>
+            <div id="calendarContainer" class="calendar-container"></div>
+        </section>
+
+        <section id="gameplay-intro">
+            <h2>遊玩簡介</h2>
+            <div class="category">
+                <h3>生存模式</h3>
+                <p>生存模式是Minecraft的核心玩法之一。在這個模式中，玩家需要收集資源，建造避難所，並抵抗各種敵對生物的攻擊。你將面對飢餓和健康的挑戰，必須確保有足夠的食物和資源來生存。生存模式鼓勵創造力和策略性，讓玩家能夠自由探索和建造，隨著遊戲進程逐漸提升能力和裝備。</p>
+            </div>
+            <div class="category">
+                <h3>創造模式</h3>
+                <p>創造模式允許玩家自由建造和創作，無需擔心生存挑戰。在這個模式下，你擁有無限的資源，可以自由地建造各種建築，設計複雜的紅石機械，或者創建自己的世界。這是玩家展現創意和設計能力的最佳平台，無論是建造宏偉的城堡，還是模擬複雜的城市規劃。</p>
+            </div>
+            <div class="category">
+                <h3>冒險模式</h3>
+                <p>冒險模式主要針對地圖製作和探索，讓玩家能夠體驗其他人創建的地圖。這個模式限制了某些功能，迫使玩家使用特定的工具來完成任務，增加了遊戲的挑戰性。這對於製作故事驅動的地圖或謎題的創作者非常有幫助，讓他們能夠設計獨特的冒險體驗。</p>
+            </div>
+            <div class="category">
+                <h3>多人聯機</h3>
+                <p>Minecraft的多人聯機模式讓玩家能夠與朋友和其他玩家一起遊玩。在這個模式下，你可以與他人合作建造，參加 PvP 戰鬥，或者共同探索地圖。這種互動性使得遊戲更加有趣，玩家能夠分享資源和經驗，並一起完成挑戰。許多伺服器提供不同的模式和玩法，讓每個玩家都能找到適合自己的遊戲風格。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Minecraft 伺服器. 版權所有.</p>
+    </footer>
+
+    <script>
+        // 設定倒數日期
+        const countdownDate = new Date("Jan 1, 2025 00:00:00").getTime();
+
+        // 每秒更新倒數計時器
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // 顯示結果
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+
+            // 如果倒數結束，顯示消息
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "跨年快樂！";
+            }
+        }, 1000);
+
+        // 生成日曆
+        function generateCalendar() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const dayOfWeek = firstDay.getDay();
+
+            let calendarHTML = '<table>';
+            calendarHTML += '<tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>';
+            calendarHTML += '<tr>';
+
+            // 填充空白格
+            for (let i = 0; i < dayOfWeek; i++) {
+                calendarHTML += '<td></td>';
+            }
+
+            // 填充日期
+            for (let day = 1; day <= daysInMonth; day++) {
+                const today = new Date();
+                if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                    calendarHTML += '<td class="today">' + day + '</td>'; // 標記今天的日期
+                } else {
+                    calendarHTML += '<td>' + day + '</td>';
+                }
+                if ((day + dayOfWeek) % 7 === 0) {
+                    calendarHTML += '</tr><tr>'; // 換行
+                }
+            }
+
+            calendarHTML += '</tr></table>';
+            document.getElementById('calendarContainer').innerHTML = calendarHTML;
+        }
+
+        generateCalendar(); // 生成日曆
+    </script>
+</body>
+</html>
